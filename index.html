@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recherche de cartes - Gallica & AD</title>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+
+    <!-- juste avant </body> -->
+    <script type="module" src="js/state.js"></script>
+    <script type="module" src="js/renderer.js"></script>
+    <script type="module" src="js/searchGallica.js"></script>
+    <script type="module" src="js/interactions.js"></script>
+    <script type="module" src="js/searchAD31.js"></script>
+    <script type="module" src="js/searchAD65.js"></script>
+    <script type="module" src="js/searchAD81.js"></script>
+    <script type="module" src="js/favorites.js"></script>
+    
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="img/logo_cartoquete.webp" height="60px" onclick="reloadPage()">
+            <div class="logo-titre" style="padding-right: 100px; padding-left: 10px;">
+                <b>CartoQuête</b> <br> <small><small>[MetaCarte-API]</small></small><br>
+                <small><small><span onclick="openInfoModal()" style="cursor: pointer; text-decoration: underline;">[Info]</span></small></small>
+            </div>
+        </div>
+        <input type="text" id="searchInput" placeholder="Recherchez [uniquement] des cartes ...">
+        <button id="searchButton" class="search-button">
+            <span class="search-text">Rechercher</span>
+            <span class="search-icon">&#128269;</span>
+        </button>
+        <span id="filter-favorites" class="star" style="cursor: pointer; font-size: 24px; padding-left: 12px; color: burlywood;" title="Cartes Favorites">&#9733;</span>
+    </header>
+
+    <nav class="navbar">
+        <ul>
+            <li>
+                <div class="checkbox-container">
+                    <label>
+                    <input type="checkbox" id="cb_gallica" name="option1" value="option1" checked>
+                    Gallica<span title="Recherche dans Gallica avec Type de document = cartes">[*]</span>
+                    </label>
+                    <span id="count_Gallica"></span>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox-container">
+                    <label>
+                    <input type="checkbox" id="cb_ad31" name="option2" value="option2">
+                    AD31<span title="Recherche dans les archives 31 avec Type de document = carte, cadastre, plan, plan cadastral">[*]</span>
+                    </label>
+                    <span id="count_AD31"></span>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox-container">
+                    <label>
+                    <input type="checkbox" id="cb_ad65" name="option3" value="option3">
+                    AD65<span title="Recherche dans les archives 65 parmi la collection des cartes du cadastre napoléonien">[*]</span>
+                    </label>
+                    <span id="count_AD65"></span>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox-container">
+                    <label>
+                    <input type="checkbox" id="cb_ad81" name="option4" value="option4">
+                    AD81<span title="Recherche dans les archives 81 parmi la collection des cartes du cadastre napoléonien">[*]</span>
+                    </label>
+                    <span id="count_AD81"></span>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="results_class" id="results"></div>
+
+    <script>
+        function reloadPage() {
+            location.reload();
+        }
+
+        function openInfoModal() {
+            const modal = document.createElement('div');
+            modal.className = 'modal';
+            modal.innerHTML = `
+                <div class="modal-content">
+                    <span class="close" onclick="this.parentElement.parentElement.remove();">&times;</span>
+                    <h2>Informations</h2>
+                    <p>Cette application permet de rechercher des cartes dans différentes bases de données.</p>
+                    <p>Utilisez le champ de recherche et les filtres pour affiner vos résultats.</p>
+
+                    <p><a style="color:blue" href="https://github.com/ericmermet/cassinet">Code</a> par Éric Mermet (CNRS / Huma-Num / <a style="color:blue" href="http://ptm.huma-num.fr/">Projet Time Machine</a>)</p>
+
+                </div>
+            `;
+            document.body.appendChild(modal);
+        }
+
+    </script>
+</body>
+</html>

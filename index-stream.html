@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoJSON Streaming Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>GeoJSON Streaming Client</h1>
+    <p>Enter the URL of the GeoJSON data below and click "Fetch GeoJSON".</p>
+    <input type="text" id="geojsonUrl" placeholder="Enter GeoJSON URL" style="width: 100%; padding: 10px;">
+    <button id="fetchButton" style="margin-top: 10px; padding: 10px;">Fetch GeoJSON</button>
+    <h2>Progressive Data:</h2>
+    <textarea id="output" readonly></textarea>
+
+    <script>
+        async function fetchStreamedGeoJSON() {
+        const urlInput = document.getElementById("geojsonUrl");
+        const outputArea = document.getElementById("output");
+        const fetchButton = document.getElementById("fetchButton");
+        const apiUrl = "https://dev.ptm.huma-num.fr/stream-geojson/";
+
+        const geojsonUrl = urlInput.value;
+        if (!geojsonUrl) {
+            alert("Please enter a valid GeoJSON URL.");
+            return;
+        }
+
+        outputArea.value = "Fetching data...\n";
+        fetchButton.disabled = true;
+
+        try {
+            const response = await fetch(`${apiUrl}?url=${encodeURIComponent(geojsonUrl)}`);
+            if (!response.ok) {
+                throw new Error(`API request failed: ${response.statusText}`);
+            }
+            console.log(response);
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder("utf-8");
+            let receivedText = "";
+
+            while (true) {
+                console.log("Reading chunk...");
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                // Decode chunk
+                receivedText += decoder.decode(value, { stream: true });
+
+                // Split into lines and process
+                const lines = receivedText.split("\n");
+                for (let i = 0; i < lines.length - 1; i++) {
+                    const line = lines[i];
+                    if (line.trim()) {
+                        const feature = JSON.parse(line); // Parse JSON
+                        outputArea.value += `${JSON.stringify(feature)}\n`;
+                        outputArea.scrollTop = outputArea.scrollHeight; // Auto-scroll
+                    }
+                }
+
+                // Keep the last unfinished line
+                receivedText = lines[lines.length - 1];
+            }
+
+            outputArea.value += "\nData fetching completed.";
+        } catch (error) {
+            console.error("Error:", error);
+            outputArea.value += `\nError: ${error.message}`;
+        } finally {
+            fetchButton.disabled = false;
+        }
+    }
+
+
+        document.getElementById("fetchButton").addEventListener("click", fetchStreamedGeoJSON);
+    </script>
+</body>
+</html>
