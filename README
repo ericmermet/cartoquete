@@ -1,0 +1,35 @@
+# Cartoquete
+
+## Description
+Cartoquete est une application web qui centralise la recherche de cartes anciennes à partir de plusieurs archives :
+- Gallica (BnF)
+- Archives départementales (AD31, AD65, AD81)
+
+Elle offre une interface unifiée pour consulter, mettre en favoris et télécharger les images géoréférencées.
+
+## Prérequis
+- Développé en Js ES6
+- Un simple navigateur moderne si vous ouvrez directement le HTML
+
+## Installation
+```bash
+git clone https://github.com/ericmermet/cartoquete.git
+cd cartoquete
+```
+
+## Utilisation
+- Ouvrez l'application
+- Saisissez un terme de recherche et cochez les bases à interroger.
+- Faites défiler pour charger plus de résultats.
+- Cliquez sur l’étoile pour ajouter/supprimer un favori.
+- Cliquez sur la vignette pour afficher la carte en haute résolution et télécharger.
+
+## Fonctionnalités
+- Recherche simultanée dans plusieurs sources
+- Pagination infinie (lazy loading)
+- Gestion des favoris (persistents durant la session)
+- Affichage haute définition avec options de téléchargement et géoréférencement
+- Responsive design pour mobiles et tablettes développé mais serait à optimiser
+
+## Licence
+CC-BY-NC-sa 4.0 © Éric Mermet (CNRS / Huma-Num / Projet Time Machine)
