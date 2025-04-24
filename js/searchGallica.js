@@ -34,6 +34,17 @@ function showModal({ title, highres, uri, key, record }) {
   const closeBtn = document.createElement('button');
   closeBtn.textContent = '×';
   closeBtn.className = 'modal-close';
+  closeBtn.style.fontSize = '24px';
+  closeBtn.style.fontWeight = 'bold';
+  closeBtn.style.padding = '8px 12px';
+  closeBtn.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+  closeBtn.style.color = 'white';
+  closeBtn.style.border = 'none';
+  closeBtn.style.borderRadius = '4px';
+  closeBtn.style.position = 'absolute';
+  closeBtn.style.top = '10px';
+  closeBtn.style.right = '10px';
+  closeBtn.style.cursor = 'pointer';
   closeBtn.addEventListener('click', () => document.body.removeChild(backdrop));
   modal.appendChild(closeBtn);
 
