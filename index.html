@@ -87,16 +87,41 @@
         function openInfoModal() {
             const modal = document.createElement('div');
             modal.className = 'modal';
+            modal.style.position = 'fixed';
+            modal.style.top = '0';
+            modal.style.left = '0';
+            modal.style.width = '100%';
+            modal.style.height = '100%';
+            modal.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            modal.style.display = 'flex';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+            modal.style.zIndex = '1000';
+            
             modal.innerHTML = `
-                <div class="modal-content">
-                    <span class="close" onclick="this.parentElement.parentElement.remove();">&times;</span>
-                    <h2>Informations</h2>
-                    <p>Cette application permet de rechercher des cartes dans différentes bases de données.</p>
-                    <p>Utilisez le champ de recherche et les filtres pour affiner vos résultats.</p>
+            <div class="modal-content" style="background-color: white; padding: 20px; border-radius: 5px; width: 70%; max-width: 600px; text-align: left; position: relative;">
+                <h2>Informations</h2>
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 0 0 auto;">
+                        <img src="img/logo_cartoquete.webp" height="180px" alt="Logo CartoQuête">
+                    </div>
+                    <div style="flex: 1;">
+                        <p>Cartoquete est une application web qui centralise la recherche de cartes anciennes à partir de plusieurs archives :</p>
+                        <ul style="padding-left: 20px; text-align: left;">
+                          <li><a style="color:blue" href="https://gallica.bnf.fr/">Gallica (BnF)</a></li>
+                          <li>Archives départementales (<a style="color:blue" href="https://archives.haute-garonne.fr/">AD31</a>, <a style="color:blue" href="https://archivesenligne65.fr/archives">AD65</a>, <a style="color:blue" href="https://archives.tarn.fr/accueil">AD81</a>)</li>
+                        </ul>
 
-                    <p><a style="color:blue" href="https://github.com/ericmermet/cassinet">Code</a> par Éric Mermet (CNRS / Huma-Num / <a style="color:blue" href="http://ptm.huma-num.fr/">Projet Time Machine</a>)</p>
+                        <p>Elle permet de rechercher des cartes anciennes à partir de mots-clés, et d'afficher les résultats sous forme de vignettes cliquables. Chaque vignette renvoie vers la ressource originale.</p>
+                        <p>Elle est basée sur une l'API MetaCarte, qui permet de rechercher des cartes anciennes à partir de mots-clés.</p>
 
+                        <p><a style="color:blue" href="https://github.com/ericmermet/cartoquete">Code</a> par Éric Mermet (CNRS / Huma-Num / <a style="color:blue" href="http://ptm.huma-num.fr/">Projets Time Machine</a>)</p>
+                    </div>
                 </div>
+                <br>
+
+                <button style="position: absolute; bottom: 20px; left: 20px; padding: 8px 16px; background-color: #f1f1f1; border: none; border-radius: 4px; cursor: pointer;" onclick="this.parentElement.parentElement.remove();">Fermer</button>
+            </div>
             `;
             document.body.appendChild(modal);
         }
